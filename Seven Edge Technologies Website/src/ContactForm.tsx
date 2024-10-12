@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { Settings, MessageSquare, Menu, X, Search } from 'lucide-react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { Settings, MessageSquare, Menu, X, Phone, Mail, MapPin, Globe, ChevronDown } from 'lucide-react';
 
-// Define types for components' props
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  image: string;
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company: string;
+  jobTitle: string;
+  country: string;
+  subject: string;
+  message: string;
 }
 
 interface NavLinkProps {
@@ -13,57 +18,141 @@ interface NavLinkProps {
   children: React.ReactNode;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, children }) => (
-  <a href={href} className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
-    {children}
-  </a>
-);
+interface TabButtonProps {
+  id: string;
+  label: string;
+  active: boolean;
+  onClick: (id: string) => void;
+}
 
-const Header: React.FC = () => {
+interface InputFieldProps {
+  label: string;
+  name: keyof FormData;
+  type?: string;
+  required?: boolean;
+}
+
+const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    jobTitle: '',
+    country: '',
+    subject: '',
+    message: '',
+  });
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string>('contact');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitted(true);
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        company: '',
+        jobTitle: '',
+        country: '',
+        subject: '',
+        message: '',
+      });
+    }, 1000);
+  };
+
+  const NavLink: React.FC<NavLinkProps> = ({ href, children }) => (
+    <a href={href} className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+      {children}
+    </a>
+  );
+
+  const TabButton: React.FC<TabButtonProps> = ({ id, label, active, onClick }) => (
+    <button
+      onClick={() => onClick(id)}
+      className={`px-4 py-2 font-medium text-sm rounded-md ${
+        active ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'
+      }`}
+    >
+      {label}
+    </button>
+  );
+
+  const InputField: React.FC<InputFieldProps> = ({ label, name, type = 'text', required = false }) => (
+    <div className="mb-4">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={formData[name]}
+        onChange={handleInputChange}
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required={required}
+      />
+    </div>
+  );
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="#" className="flex items-center">
-              <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
-                <circle cx="12" cy="12" r="10" fill="#4A90E2" />
-              </svg>
-              <span className="text-xl font-bold text-gray-900">Acme Inc.</span>
-            </a>
-          </div>
-          <div className="-mr-2 -my-2 md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-            >
-              <span className="sr-only">Open menu</span>
-              <Menu className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <nav className="hidden md:flex space-x-10">
-            <NavLink href="#">Home</NavLink>
-            <NavLink href="#">Products</NavLink>
-            <NavLink href="#">About</NavLink>
-            <NavLink href="#">Contact</NavLink>
-          </nav>
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <button
-              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className="p-2 text-gray-400 hover:text-gray-500"
-            >
-              <Settings size={20} />
-            </button>
-            <button className="p-2 text-gray-400 hover:text-gray-500">
-              <MessageSquare size={20} />
-            </button>
-            <button className="ml-2 w-8 h-8 bg-gray-200 rounded-full"></button>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+            <div className="flex justify-start lg:w-0 lg:flex-1">
+              <a href="#" className="flex items-center">
+                <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
+                  <circle cx="12" cy="12" r="10" fill="#4A90E2" />
+                </svg>
+                <span className="text-xl font-bold text-gray-900">7EdgeSolutions</span>
+              </a>
+            </div>
+            <div className="-mr-2 -my-2 md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              >
+                <span className="sr-only">Open menu</span>
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <nav className="hidden md:flex space-x-10">
+              <NavLink href="#">Home</NavLink>
+              <NavLink href="#">Products</NavLink>
+              <NavLink href="#">About</NavLink>
+              <NavLink href="#">Contact</NavLink>
+            </nav>
+            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+              <button
+                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                className="p-2 text-gray-400 hover:text-gray-500"
+              >
+                <Settings size={20} />
+              </button>
+              <button className="p-2 text-gray-400 hover:text-gray-500">
+                <MessageSquare size={20} />
+              </button>
+              <button className="ml-2 w-8 h-8 bg-gray-200 rounded-full"></button>
+            </div>
           </div>
         </div>
-      </div>
+      </header>
 
       {isMenuOpen && (
         <div className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
@@ -74,7 +163,7 @@ const Header: React.FC = () => {
                   <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
                     <circle cx="12" cy="12" r="10" fill="#4A90E2" />
                   </svg>
-                  <span className="text-xl font-bold text-gray-900">Acme Inc.</span>
+                  <span className="text-xl font-bold text-gray-900">7EdgeSolutions</span>
                 </div>
                 <div className="-mr-2">
                   <button
@@ -106,91 +195,117 @@ const Header: React.FC = () => {
           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
         </div>
       )}
-    </header>
-  );
-};
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image }) => (
-  <div className="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-lg">
-    <img className="w-full h-48 object-cover" src={image} alt={title} />
-    <div className="p-6">
-      <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <a href="#" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
-        Learn More
-      </a>
-    </div>
-  </div>
-);
-
-const SearchBar: React.FC = () => (
-  <div className="max-w-3xl mx-auto mt-8 mb-12">
-    <div className="relative">
-      <input
-        type="text"
-        placeholder="Search projects..."
-        className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <Search className="h-5 w-5 text-gray-400" aria-hidden="true" />
-      </div>
-    </div>
-  </div>
-);
-
-const Portfolio: React.FC = () => {
-  const projects: ProjectCardProps[] = [
-    { 
-      title: 'Modern Home Design',
-      description: 'A sleek and minimalist approach to contemporary living spaces.',
-      image: '/api/placeholder/400/300'
-    },
-    { 
-      title: 'Sustainable Office Complex',
-      description: 'Eco-friendly design incorporating renewable energy and green spaces.',
-      image: '/api/placeholder/400/300'
-    },
-    { 
-      title: 'Urban Renewal Project',
-      description: 'Revitalizing city centers with mixed-use developments and public areas.',
-      image: '/api/placeholder/400/300'
-    },
-    { 
-      title: 'Luxury Resort',
-      description: 'Blending natural beauty with high-end amenities for an unforgettable experience.',
-      image: '/api/placeholder/400/300'
-    },
-    { 
-      title: 'Smart City Infrastructure',
-      description: 'Integrating technology for efficient urban living and resource management.',
-      image: '/api/placeholder/400/300'
-    },
-    { 
-      title: 'Historic Preservation',
-      description: 'Restoring and adapting heritage buildings for modern use while preserving their character.',
-      image: '/api/placeholder/400/300'
-    },
-  ];
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="max-w-xl mb-8">
-          <h2 className="text-3xl font-bold mb-4">Our Work</h2>
-          <p className="mb-6">
-            Discover our innovative projects and design solutions. We create spaces that inspire, function efficiently, and stand the test of time.
-          </p>
-        </div>
-        <SearchBar />
-        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:gap-x-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
-          ))}
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">Contact 7EdgeSolutions</h1>
+          
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+            <div className="flex border-b border-gray-200">
+              <TabButton id="contact" label="Contact Us" active={activeTab === 'contact'} onClick={setActiveTab} />
+              <TabButton id="sales" label="Sales Inquiry" active={activeTab === 'sales'} onClick={setActiveTab} />
+              <TabButton id="support" label="Technical Support" active={activeTab === 'support'} onClick={setActiveTab} />
+            </div>
+            
+            <div className="p-6">
+              {activeTab === 'contact' && (
+                <>
+                  <h2 className="text-2xl font-semibold mb-4">Get in touch</h2>
+                  <p className="mb-6">
+                    We're here to help. Whether you have questions about our products, need support, or just want to say hi, we'd love to hear from you.
+                  </p>
+                </>
+              )}
+              {activeTab === 'sales' && (
+                <>
+                  <h2 className="text-2xl font-semibold mb-4">Sales Inquiry</h2>
+                  <p className="mb-6">
+                    Interested in our products or services? Let us know how we can help you achieve your business goals.
+                  </p>
+                </>
+              )}
+              {activeTab === 'support' && (
+                <>
+                  <h2 className="text-2xl font-semibold mb-4">Technical Support</h2>
+                  <p className="mb-6">
+                    Need help with one of our products? Our technical support team is here to assist you.
+                  </p>
+                </>
+              )}
+
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField label="First Name" name="firstName" required />
+                    <InputField label="Last Name" name="lastName" required />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField label="Email" name="email" type="email" required />
+                    <InputField label="Phone" name="phone" type="tel" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <InputField label="Company" name="company" />
+                    <InputField label="Job Title" name="jobTitle" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="mb-4">
+                      <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">
+                        Country
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="country"
+                          name="country"
+                          value={formData.country}
+                          onChange={handleInputChange}
+                          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                        >
+                          <option value="">Select a country</option>
+                          <option value="us">United States</option>
+                          <option value="ca">Canada</option>
+                          <option value="uk">United Kingdom</option>
+                          {/* Add more countries as needed */}
+                        </select>
+                        <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                      </div>
+                    </div>
+                    <InputField label="Subject" name="subject" required />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Message <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={4}
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <button 
+                      type="submit" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                  <p className="font-bold">Thank you for your message!</p>
+                  <p>We'll get back to you as soon as possible.</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </div>
   );
 };
 
-export default Portfolio;
+export default ContactForm;
