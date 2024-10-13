@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';  // Importing the Button component
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => (
   <div className="relative bg-gray-800 text-white">
@@ -21,18 +22,23 @@ const HeroSection = () => (
             by building, modernizing, and scaling apps that deliver results.
           </p>
           <div className="flex flex-wrap gap-4">
+            <Link to="/contact">
               <Button 
-                label="Talk to a specialist" 
-                variant="primary" 
-                onClick={() => alert('Primary button clicked!')} 
-              />
+                label="Talk to a specialist"
+                variant="primary" onClick={function (): void {
+                  throw new Error('Function not implemented.');
+                } }              
+                />
+            </Link>
 
+            <Link to="/portfolio">
               <Button 
-                label="View our work" 
-                variant="secondary" 
-                onClick={() => alert('Secondary button clicked!')} 
-              />
-
+                label="View our work"
+                variant="secondary" onClick={function (): void {
+                  throw new Error('Function not implemented.');
+                } }              
+                />
+            </Link>
           </div>
         </div>
       </div>

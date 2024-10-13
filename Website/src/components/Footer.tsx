@@ -11,25 +11,22 @@ const Footer = () => (
           <div>
             <h4 className="text-sm font-semibold mb-4 uppercase">Services</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white">Mobile Apps</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Web Applications</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">API Development</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white">Mobile Apps</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white">Web Applications</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white">API Development</a></li>
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-4 uppercase">Company</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white">About Us</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Careers</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Contact</a></li>
+              <li><a href="/about-us" className="text-gray-400 hover:text-white">About Us</a></li>
+              <li><a href="/contact" className="text-gray-400 hover:text-white">Contact</a></li>
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-4 uppercase">Connect</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white">LinkedIn</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">Twitter</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white">GitHub</a></li>
+              <li><a href="https://www.instagram.com/7edge.official/" className="text-gray-400 hover:text-white">Instagram</a></li>
             </ul>
           </div>
         </div>

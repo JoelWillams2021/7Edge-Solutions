@@ -27,10 +27,8 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <a href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 text-blue-600">
-                <svg viewBox="0 0 24 24" className="w-full h-full">
-                  <circle cx="12" cy="12" r="10" fill="currentColor" />
-                </svg>
+              <div className="w-15 h-10 text-blue-600">
+                <img src="/images/logo2.png" alt="My Image" className="w-full h-full" />
               </div>
               <span className="text-xl font-bold text-gray-900">Seven Edge Solutions</span>
             </a>
@@ -38,13 +36,9 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <NavLink href="#services">Services</NavLink>
-            <NavLink href="#portfolio">Portfolio</NavLink>
-            <NavLink href="#about">About Us</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
-            <Button label="Get Started" variant="primary" onClick={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
+            <NavLink href="/portfolio">Portfolio</NavLink>
+            <NavLink href="/about-us">About Us</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
           </nav>
 
           {/* Mobile menu button */}
@@ -63,13 +57,9 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4">
             <nav className="flex flex-col space-y-2">
-              <NavLink href="#services">Services</NavLink>
               <NavLink href="#portfolio">Portfolio</NavLink>
               <NavLink href="#about">About Us</NavLink>
               <NavLink href="#contact">Contact</NavLink>
-              <Button label="Get Started" variant="primary" onClick={function (): void {
-                throw new Error('Function not implemented.');
-              } } />
             </nav>
           </div>
         )}
