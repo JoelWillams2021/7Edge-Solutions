@@ -30,7 +30,7 @@ const Header = () => {
               <div className="w-15 h-10 text-blue-600">
                 <img src="/images/logo2.png" alt="My Image" className="w-full h-full" />
               </div>
-              <span className="text-xl font-bold text-gray-900">Seven Edge Solutions</span>
+              <span className="text-xl font-bold text-gray-900">7Edge Solutions</span>
             </a>
           </div>
 

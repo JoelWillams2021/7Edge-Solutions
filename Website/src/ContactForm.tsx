@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Settings, MessageSquare, Menu, X, Phone, Mail, MapPin, Globe, ChevronDown } from 'lucide-react';
+import Footer from './components/Footer';
 
 interface FormData {
   firstName: string;
@@ -116,11 +117,11 @@ const ContactForm: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="#" className="flex items-center">
-                <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
-                  <circle cx="12" cy="12" r="10" fill="#4A90E2" />
-                </svg>
-                <span className="text-xl font-bold text-gray-900">7EdgeSolutions</span>
+              <a href="/"  className="flex items-center gap-2">
+                <div className="w-15 h-10 text-blue-600">
+                  <img src="/images/logo2.png" alt="My Image" className="w-full h-full" />
+                </div>
+                <span className="text-xl font-bold text-gray-900">7Edge Solutions</span>
               </a>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -133,22 +134,13 @@ const ContactForm: React.FC = () => {
               </button>
             </div>
             <nav className="hidden md:flex space-x-10">
-              <NavLink href="#">Home</NavLink>
-              <NavLink href="#">Products</NavLink>
-              <NavLink href="#">About</NavLink>
-              <NavLink href="#">Contact</NavLink>
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/portfolio">Portfolio</NavLink>
+              <NavLink href="/about-us">About Us</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
             </nav>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <button
-                onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                className="p-2 text-gray-400 hover:text-gray-500"
-              >
-                <Settings size={20} />
-              </button>
-              <button className="p-2 text-gray-400 hover:text-gray-500">
-                <MessageSquare size={20} />
-              </button>
-              <button className="ml-2 w-8 h-8 bg-gray-200 rounded-full"></button>
+
             </div>
           </div>
         </div>
@@ -175,26 +167,12 @@ const ContactForm: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  <NavLink href="#">Home</NavLink>
-                  <NavLink href="#">Products</NavLink>
-                  <NavLink href="#">About</NavLink>
-                  <NavLink href="#">Contact</NavLink>
-                </nav>
-              </div>
             </div>
           </div>
         </div>
       )}
 
-      {isSettingsOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
-        </div>
-      )}
+    
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-3xl mx-auto">
@@ -301,9 +279,11 @@ const ContactForm: React.FC = () => {
                 </div>
               )}
             </div>
+            
           </div>
         </div>
       </main>
+      <Footer></Footer>
     </div>
   );
 };
