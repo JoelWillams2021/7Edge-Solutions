@@ -1,5 +1,7 @@
 import React, { useState, ReactNode } from 'react';
 import { Settings, MessageSquare, Menu, X, Camera, Database, PieChart, DollarSign } from 'lucide-react';
+import Footer from './components/Footer';
+
 
 // Define props types for Icon component
 interface IconProps {
@@ -60,10 +62,10 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <a href="/" className="flex items-center">
-              <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
-                <circle cx="12" cy="12" r="10" fill="#4A90E2" />
-              </svg>
-              <span className="text-xl font-bold text-gray-900">Seven Edge Solutions</span>
+              <div className="w-13 h-10 text-blue-600">
+                  <img src="/images/logo2.png" alt="My Image" className="w-full h-full" />
+              </div>
+              <span className="text-xl font-bold text-gray-900 ml-2">Seven Edge Solutions</span>
             </a>
           </div>
           <div className="-mr-2 -my-2 md:hidden">
@@ -76,10 +78,10 @@ const Header: React.FC = () => {
             </button>
           </div>
           <nav className="hidden md:flex space-x-10">
-            <NavLink href="#mission">Mission</NavLink>
-            <NavLink href="#vision">Vision</NavLink>
-            <NavLink href="#team">Team</NavLink>
-            <NavLink href="#contact">Contact</NavLink>
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/about-us">About Us</NavLink>
+              <NavLink href="/portfolio">Portfolio</NavLink>
+              <NavLink href="/contact">Contact Us</NavLink>
           </nav>
         </div>
       </div>
@@ -103,10 +105,9 @@ const Header: React.FC = () => {
               </div>
               <div className="mt-6">
                 <nav className="grid gap-y-8">
-                  <NavLink href="#mission">Mission</NavLink>
-                  <NavLink href="#vision">Vision</NavLink>
-                  <NavLink href="#team">Team</NavLink>
-                  <NavLink href="#contact">Contact</NavLink>
+                  <NavLink href="/about-us">About Us</NavLink>
+                  <NavLink href="/portfolio">Portfolio</NavLink>
+                  <NavLink href="/contact">Contact Us</NavLink>
                 </nav>
               </div>
             </div>
@@ -155,12 +156,11 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, image }) => (
 // Hero component
 const Hero: React.FC = () => (
   <div className="relative bg-gray-800 text-white">
-    <img src="https://cdn.usegalileo.ai/sdxl10/2d0d8cdc-2737-4d9e-939a-6b28dda24d9a.png" alt="" className="w-full h-[60vh] object-cover opacity-50" />
+    <img src="/images/innovation.jpg" alt="" className="w-full h-[60vh] object-cover opacity-50" />
     <div className="absolute inset-0 flex flex-col justify-center items-center p-4 text-center">
       <h1 className="text-4xl md:text-5xl font-bold mb-6 max-w-3xl">
         We're on a mission to power the future of business through technology
       </h1>
-      <Button variant="secondary">Learn More</Button>
     </div>
   </div>
 );
@@ -168,46 +168,37 @@ const Hero: React.FC = () => (
 // HomePage component
 const HomePage: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
         <Hero />
-        <Section
-          id="mission"
-          title="Our Mission"
-          content="Our mission is to empower businesses with the technology they need to compete and win in the digital economy. We provide a comprehensive suite of cloud-based products and services that help companies innovate faster, scale smarter, and compete more effectively."
-        />
-        <Section
-          id="vision"
-          title="Our Vision"
-          content="To be the technology partner of choice for businesses worldwide, helping our customers harness the power of the cloud to achieve their most ambitious goals. We believe that by providing innovative, high-quality solutions and outstanding customer service, we can help businesses thrive in the digital age."
-        />
-        <section id="team" className="py-16 bg-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold mb-10 text-center">Our Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <TeamMember name="TBD" role="Chief Executive Officer" image="" />
-              <TeamMember name="Amogh Turaga" role="Chief Technology Officer" image="/images/amogh.jpeg" />
-              <TeamMember name="Soham Gherwada" role="Chief Marketing Officer" image="/images/soham.jpeg" />
-              <TeamMember name="Mursaleen Sakoskar" role="Chief Financial Officer" image="/images/mursaleen.jpeg" />
-            </div>
+         <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex-grow md:max-w-lg">
+            <Section
+              id="mission"
+              title="Our Mission"
+              content="Our mission is to empower businesses with the technology they need to compete and win in the digital economy. We provide a comprehensive suite of cloud-based products and services that help companies innovate faster, scale smarter, and compete more effectively."
+            />
+            <Section
+              id="vision"
+              title="Our Vision"
+              content="To be the technology partner of choice for businesses worldwide, helping our customers harness the power of the cloud to achieve their most ambitious goals. We believe that by providing innovative, high-quality solutions and outstanding customer service, we can help businesses thrive in the digital age."
+            />
           </div>
-        </section>
-        <section id="contact" className="py-16 bg-blue-600 text-white text-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold mb-6">Ready to get started?</h2>
-            <p className="mb-8 text-lg">Join us in shaping the future of business technology.</p>
-            <Button variant="secondary">Contact Us</Button>
+          <div className="flex-shrink-0 w-full md:w-1/2 mt-10 md:mt-0">
+            <img 
+              src="/images/mission.png" 
+              alt="Descriptive Alt Text" 
+              className="w-full h-auto rounded-lg" // Make image responsive and rounded
+            />
           </div>
-        </section>
-      </main>
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; 2024 Seven Edge Technologies. All rights reserved.</p>
         </div>
-      </footer>
+
+      </main>
+      <Footer></Footer>
     </div>
   );
 };
 
 export default HomePage;
+
