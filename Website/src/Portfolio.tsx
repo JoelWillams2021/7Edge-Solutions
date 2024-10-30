@@ -1,181 +1,771 @@
-import React, { useState } from 'react';
-import { Search, Menu, X } from 'lucide-react';
+'use client'
 
-// Define types for the ProjectCard props
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  image: string;
-}
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
+import { Menu, X, ArrowRight, Code, Database, Cloud, Zap, Globe, Award, Cpu, Users, Briefcase } from 'lucide-react'
+import { FaInstagram, FaTwitter, FaLinkedin, FaGithub, FaReact, FaAngular, FaVuejs, FaNodeJs, FaPython, FaJava, FaAws } from 'react-icons/fa'
+import { SiMongodb, SiPostgresql, SiGooglecloud, SiTensorflow, SiKubernetes, SiHiveBlockchain } from 'react-icons/si'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Sphere, MeshDistortMaterial } from '@react-three/drei'
+import type { Mesh } from 'three'
+import ReactPlayer from 'react-player'
+
+const NavLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
+  <motion.a
+    href={href}
+    className="text-white hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium transition-colors relative overflow-hidden group"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <span className="relative z-10">{children}</span>
+    <motion.span
+      className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-400"
+      initial={{ scaleX: 0 }}
+      whileHover={{ scaleX: 1 }}
+      transition={{ duration: 0.3 }}
+    />
+  </motion.a>
+)
 
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Type for useState
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { scrollY } = useScroll()
+  const headerBackground = useTransform(
+    scrollY,
+    [0, 100],
+    ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.8)']
+  )
 
   return (
-    <header className="bg-white shadow-md">
+    <motion.header
+      className="fixed top-0 left-0 right-0 z-50 py-4"
+      style={{ backgroundColor: headerBackground }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="/" className="text-xl font-bold text-gray-800">SevenEdge Technologies</a>
-          </div>
-          <div className="-mr-2 -my-2 md:hidden">
-            <button
-              type="button"
-              className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+        <div className="flex justify-between items-center">
+          <motion.a
+            href="/"
+            className="flex items-center gap-2 group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-md flex items-center justify-center"
+              whileHover={{ rotate: 12 }}
+              transition={{ duration: 0.3 }}
             >
-              <span className="sr-only">Open menu</span>
-              {isMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
-            </button>
-          </div>
-          <nav className="hidden md:flex space-x-10">
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Solutions</a>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Resources</a>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Pricing</a>
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">Company</a>
+              <span className="text-white text-xl font-bold">7E</span>
+            </motion.div>
+            <span className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors duration-300">
+              Seven Edge Solutions
+            </span>
+          </motion.a>
+          <nav className="hidden md:flex items-center space-x-8">
+            <NavLink href="/portfolio">Portfolio</NavLink>
+            <NavLink href="/about-us">About Us</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            <motion.button
+              className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get Started
+            </motion.button>
           </nav>
-          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <a href="#" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-              Contact Us
-            </a>
+          <div className="md:hidden">
+            <motion.button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-white hover:text-purple-300 rounded-md transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.button>
           </div>
         </div>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="md:hidden py-4 space-y-2"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <NavLink href="/portfolio">Portfolio</NavLink>
+              <NavLink href="/about-us">About Us</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
+              <motion.button
+                className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl w-full mt-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      {isMenuOpen && (
-        <div className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
-          <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-            <div className="pt-5 pb-6 px-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <img className="h-8 w-auto" src="/api/placeholder/32/32" alt="Acme Inc." />
-                </div>
-                <div className="-mr-2">
-                  <button
-                    type="button"
-                    className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <X className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">Solutions</a>
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">Resources</a>
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">Pricing</a>
-                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">Company</a>
-                </nav>
-              </div>
-            </div>
-            <div className="py-6 px-5 space-y-6">
-              <a href="#" className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                Contact Us
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-};
+    </motion.header>
+  )
+}
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, description, image }) => (
-  <div className="bg-white rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
-    <img className="w-full h-48 object-cover" src={image} alt={title} />
-    <div className="p-6">
-      <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <a href="#" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Learn More
-      </a>
-    </div>
-  </div>
-);
-
-const SearchBar: React.FC = () => (
-  <div className="max-w-3xl mx-auto mt-8 mb-12">
-    <div className="relative">
-      <input
-        type="text"
-        placeholder="Search projects..."
-        className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-      />
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <Search className="h-5 w-5 text-gray-400" aria-hidden="true" />
-      </div>
-    </div>
-  </div>
-);
-
-const Portfolio: React.FC = () => {
-  const projects: ProjectCardProps[] = [
-    { 
-      title: 'Modern Home Design',
-      description: 'A sleek and minimalist approach to contemporary living spaces.',
-      image: 'https://cdn.usegalileo.ai/sdxl10/b84c6066-7e4c-4108-9f66-9bf01ed4ad8f.png'
-    },
-    { 
-      title: 'Sustainable Office Complex',
-      description: 'Eco-friendly design incorporating renewable energy and green spaces.',
-      image: 'https://cdn.usegalileo.ai/sdxl10/05b4cb0d-1003-4bf0-8963-2c7db7daa62b.png'
-    },
-    { 
-      title: 'Urban Renewal Project',
-      description: 'Revitalizing city centers with mixed-use developments and public areas.',
-      image: '"https://cdn.usegalileo.ai/sdxl10/05b4cb0d-1003-4bf0-8963-2c7db7daa62b.png'
-    },
-    { 
-      title: 'Luxury Resort',
-      description: 'Blending natural beauty with high-end amenities for an unforgettable experience.',
-      image: 'https://cdn.usegalileo.ai/sdxl10/46c17195-283d-40a1-8c31-469f64ea5ee8.png'
+const AnimatedSphere = () => {
+  const mesh = useRef<Mesh>(null)
+  useFrame((state, delta) => {
+    if (mesh.current) {
+      mesh.current.rotation.x += delta * 0.25
+      mesh.current.rotation.y += delta * 0.25
     }
-  ];
+  })
+  return (
+    <Sphere ref={mesh} args={[1, 100, 200]} scale={2}>
+      <MeshDistortMaterial
+        color="#8B5CF6"
+        attach="material"
+        distort={0.3}
+        speed={1.5}
+        roughness={0}
+      />
+    </Sphere>
+  )
+}
+
+const EnhancedHeroSection: React.FC = () => {
+  const [isVideoReady, setIsVideoReady] = useState(false)
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <Header />
-      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-4">Our Work</h1>
-        <p className="text-xl text-gray-500 text-center mb-8">Discover our innovative projects and design solutions</p>
-        <SearchBar />
-        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:gap-x-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <ReactPlayer
+          url="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/futuristic-city-HNxRoT1jfFEhqLGXQQWqgZQZBPRBSo.mp4"
+          playing
+          loop
+          muted
+          width="100%"
+          height="100%"
+          onReady={() => setIsVideoReady(true)}
+          style={{ opacity: isVideoReady ? 1 : 0, transition: 'opacity 1s ease-in-out' }}
+        />
+      </div>
+      <div className="absolute inset-0 bg-black opacity-60 z-10"></div>
+      <div className="relative z-20 flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto px-4">
+        <div className="text-left text-white max-w-2xl mb-8 md:mb-0">
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Redefining the Future of Technology
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl mb-12"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Pioneering AI, Blockchain, and Cloud solutions that transform industries and drive innovation
+          </motion.p>
+          <motion.button
+            className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            Discover Our Innovations
+          </motion.button>
+        </div>
+        <div className="w-full max-w-md h-96">
+          <Canvas>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            <AnimatedSphere />
+          </Canvas>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const StatCard: React.FC<{ icon: React.ReactNode; value: string; label: string }> = ({ icon, value, label }) => (
+  <motion.div
+    className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-xl"
+    whileHover={{ scale: 1.05 }}
+    transition={{ duration: 0.3 }}
+  >
+    <div className="text-4xl text-purple-400 mb-4">{icon}</div>
+    <h3 className="text-3xl font-bold text-white mb-2">{value}</h3>
+    <p className="text-gray-400">{label}</p>
+  </motion.div>
+)
+
+const StartupProgressSection: React.FC = () => {
+  const stats = [
+    { icon: <Users />, value: "Alpha", label: "Development Stage" },
+    { icon: <Briefcase />, value: "3", label: "Pilot Projects" },
+    { icon: <Award />, value: "2", label: "Research Patents Pending" },
+    { icon: <Cpu />, value: "4", label: "Core Technologies" },
+  ]
+
+  return (
+    <section className="py-24 bg-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Our Startup Journey
+        </motion.h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <StatCard key={index} {...stat} />
           ))}
         </div>
-      </main>
-      <footer className="bg-gray-800 text-white mt-16">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About Us</h3>
-              <p className="text-gray-300">Acme Inc. is a leading design and architecture firm, creating innovative spaces for a sustainable future.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-300 hover:text-white">Home</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Services</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Portfolio</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-              <p className="text-gray-300">123 Design Street, Creativity City, 12345</p>
-              <p className="text-gray-300">Phone: (123) 456-7890</p>
-              <p className="text-gray-300">Email: info@acmeinc.com</p>
-            </div>
-          </div>
-          <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-            <p className="text-gray-300">&copy; 2024 Acme Inc. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
+      </div>
+    </section>
+  )
+}
 
-export default Portfolio;
+const EnhancedProjectCard: React.FC<{ title: string; description: string; icon: React.ReactNode; index: number }> = ({
+  title,
+  description,
+  icon,
+  index,
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+  const cardRef = useRef(null)
+  const isInView = useInView(cardRef, { once: true })
+  
+  return (
+    <motion.div
+      ref={cardRef}
+      className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg overflow-hidden shadow-2xl hover:shadow-purple-500/20 transition-all duration-300"
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ scale: 1.05 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <div className="p-8 flex flex-col items-center">
+        <motion.div
+          className="w-24 h-24 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mb-6"
+          animate={{ rotate: isHovered ? 360 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {icon}
+        </motion.div>
+        <h3 className="text-2xl font-bold mb-4 text-white">{title}</h3>
+        <p className="text-gray-300 mb-6 text-center">{description}</p>
+        <motion.button
+          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl group"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Explore Project
+          <motion.div
+            className="ml-2"
+            initial={{ x: 0 }}
+            animate={{ x: isHovered ? 5 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ArrowRight size={16} />
+          </motion.div>
+        </motion.button>
+      </div>
+    </motion.div>
+  )
+}
+
+const TechIcon: React.FC<{ icon: React.ReactNode; name: string }> = ({ icon, name }) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.div
+      className="flex flex-col items-center group"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <motion.div
+        className="text-5xl mb-3 text-purple-400  group-hover:text-indigo-400 transition-colors duration-300"
+        animate={{ rotate: isHovered ? 360 : 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {icon}
+      </motion.div>
+      <span className="text-sm text-gray-300 group-hover:text-white transition-colors duration-300">
+        {name}
+      </span>
+    </motion.div>
+  )
+}
+
+const EnhancedTechnologiesSection: React.FC = () => {
+  const { scrollYProgress } = useScroll()
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1])
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+  }
+
+  return (
+    <motion.section
+      ref={ref}
+      className="py-24 bg-gradient-to-b from-gray-900 to-black"
+      style={{ scale }}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+          variants={itemVariants}
+        >
+          Cutting-Edge Technologies We Master
+        </motion.h2>
+        <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-12" variants={containerVariants}>
+          <motion.div className="space-y-8" variants={itemVariants}>
+            <h3 className="text-2xl font-semibold text-purple-400 flex items-center">
+              <Code className="mr-3" /> Frontend
+            </h3>
+            <div className="grid grid-cols-3 gap-6">
+              <TechIcon icon={<FaReact />} name="React" />
+              <TechIcon icon={<FaAngular />} name="Angular" />
+              <TechIcon icon={<FaVuejs />} name="Vue.js" />
+            </div>
+          </motion.div>
+          <motion.div className="space-y-8" variants={itemVariants}>
+            <h3 className="text-2xl font-semibold text-purple-400 flex items-center">
+              <Zap className="mr-3" /> Backend
+            </h3>
+            <div className="grid grid-cols-3 gap-6">
+              <TechIcon icon={<FaNodeJs />} name="Node.js" />
+              <TechIcon icon={<FaPython />} name="Python" />
+              <TechIcon icon={<FaJava />} name="Java" />
+            </div>
+          </motion.div>
+          <motion.div className="space-y-8" variants={itemVariants}>
+            <h3 className="text-2xl font-semibold text-purple-400 flex items-center">
+              <Database className="mr-3" /> Data & AI
+            </h3>
+            <div className="grid grid-cols-3 gap-6">
+              <TechIcon icon={<SiMongodb />} name="MongoDB" />
+              <TechIcon icon={<SiPostgresql />} name="PostgreSQL" />
+              <TechIcon icon={<SiTensorflow />} name="TensorFlow" />
+            </div>
+          </motion.div>
+          <motion.div className="space-y-8" variants={itemVariants}>
+            <h3 className="text-2xl font-semibold text-purple-400 flex items-center">
+              <Cloud className="mr-3" /> Cloud & DevOps
+            </h3>
+            <div className="grid grid-cols-3 gap-6">
+              <TechIcon icon={<FaAws />} name="AWS" />
+              <TechIcon icon={<SiGooglecloud />} name="Google Cloud" />
+              <TechIcon icon={<SiKubernetes />} name="Kubernetes" />
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.section>
+  )
+}
+
+const StartupMilestonesSection: React.FC = () => {
+  const milestones = [
+    { title: "Concept Validation", description: "Successfully validated our core technology concept" },
+    { title: "Seed Funding", description: "Secured initial seed funding to accelerate development" },
+    { title: "Beta Launch", description: "Launched beta version to early adopters for feedback" },
+    { title: "First Enterprise Client", description: "Onboarded our first enterprise client for a pilot project" },
+  ]
+
+  return (
+    <section className="py-24 bg-gradient-to-b from-gray-900 to-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Our Startup Milestones
+        </motion.h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {milestones.map((milestone, index) => (
+            <motion.div
+              key={index}
+              className="bg-gradient-to-br from-purple-500 to-indigo-600 p-8 rounded-lg shadow-xl"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4">{milestone.title}</h3>
+              <p className="text-gray-200">{milestone.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const TestimonialCard: React.FC<{ quote: string; author: string; role: string; image: string }> = ({
+  quote,
+  author,
+  role,
+  image,
+}) => (
+  <motion.div
+    className="bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-lg shadow-2xl"
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 0.9 }}
+    transition={{ duration: 0.5 }}
+  >
+    <p className="text-gray-300 mb-6 italic text-lg">"{quote}"</p>
+    <div className="flex items-center">
+      <motion.img
+        src={image}
+        alt={author}
+        className="w-16 h-16 rounded-full object-cover mr-4"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      />
+      <div>
+        <p className="font-semibold text-white text-lg">{author}</p>
+        <p className="text-purple-400">{role}</p>
+      </div>
+    </div>
+  </motion.div>
+)
+
+const TestimonialsSection: React.FC = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0)
+  const testimonials = [
+    {
+      quote:
+        "Seven Edge Solutions has shown incredible potential with their innovative approach to AI integration. Their team's expertise is evident in the early results of our collaboration.",
+      author: 'Dr. Emily Chen',
+      role: 'CTO, TechStart Innovations',
+      image: '/placeholder.svg?height=200&width=200',
+    },
+    {
+      quote:
+        "As an early adopter of Seven Edge's technology, I'm impressed by their commitment to pushing the boundaries of what's possible in blockchain solutions.",
+      author: 'Michael Rodriguez',
+      role: 'Founder, BlockChain Ventures',
+      image: '/placeholder.svg?height=200&width=200',
+    },
+    {
+      quote:
+        "Seven Edge's approach to cloud architecture is refreshing. Their solutions, though in early stages, show promise for scalability and efficiency.",
+      author: 'Sarah Johnson',
+      role: 'Cloud Architect, FutureTech Inc.',
+      image: '/placeholder.svg?height=200&width=200',
+    },
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+    }, 8000)
+    return () => clearInterval(interval)
+  }, [testimonials.length])
+
+  return (
+    <section className="py-24 bg-gradient-to-b from-black to-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          What Our Early Adopters Say
+        </motion.h2>
+        <div className="relative h-[300px] md:h-[250px]">
+          <AnimatePresence mode="wait">
+            <TestimonialCard key={currentTestimonial} {...testimonials[currentTestimonial]} />
+          </AnimatePresence>
+        </div>
+        <div className="flex justify-center mt-8">
+          {testimonials.map((_, index) => (
+            <motion.button
+              key={index}
+              className={`w-3 h-3 rounded-full mx-2 focus:outline-none ${
+                index === currentTestimonial ? 'bg-purple-500' : 'bg-gray-600'
+              }`}
+              onClick={() => setCurrentTestimonial(index)}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.8 }}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="bg-black text-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-500 text-transparent bg-clip-text">Seven Edge Solutions</h3>
+            <p className="text-gray-400">
+              Pioneering the future of technology with innovative solutions that redefine industries.
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
+            <ul className="space-y-3">
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  AI & Machine Learning
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Blockchain Development
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  IoT Solutions
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Cloud Architecture
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h4 className="text-lg font-semibold mb-6 text-purple-400">Company</h4>
+            <ul className="space-y-3">
+              <li>
+                <a href="/about-us" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/careers" className="text-gray-400 hover:text-white transition-colors">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="/press" className="text-gray-400 hover:text-white transition-colors">
+                  Press & Media
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h4 className="text-lg font-semibold mb-6 text-purple-400">Connect</h4>
+            <div className="flex space-x-4">
+              <motion.a
+                href="https://www.instagram.com/7edge.official/"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.8 }}
+              >
+                <FaInstagram size={24} />
+              </motion.a>
+              <motion.a
+                href="#"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+                whileHover={{ scale: 1.2, rotate: -5 }}
+                whileTap={{ scale: 0.8 }}
+              >
+                <FaTwitter size={24} />
+              </motion.a>
+              <motion.a
+                href="#"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.8 }}
+              >
+                <FaLinkedin size={24} />
+              </motion.a>
+              <motion.a
+                href="#"
+                className="text-gray-400 hover:text-purple-400 transition-colors"
+                whileHover={{ scale: 1.2, rotate: -5 }}
+                whileTap={{ scale: 0.8 }}
+              >
+                <FaGithub size={24} />
+              </motion.a>
+            </div>
+            <div className="mt-6">
+              <h5 className="text-sm font-semibold mb-2 text-purple-400">Stay Updated</h5>
+              <form className="flex">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+                <motion.button
+                  type="submit"
+                  className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-r-md"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Subscribe
+                </motion.button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+          <p>© 2024 Seven Edge Solutions. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+const FeaturedVideoSection: React.FC = () => {
+  const [isVideoReady, setIsVideoReady] = useState(false)
+  
+  return (
+    <section className="py-24 bg-gradient-to-b from-gray-900 to-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
+          initial={{ opacity: 0, y: -50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Our Vision in Action
+        </motion.h2>
+        <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-2xl">
+                      <ReactPlayer
+              url="/images/invideo-ai-1080 Discover Our Cutting-Edge Software Solut 2024-10-25.mp4"
+              width="100%"
+              height="100%"
+              controls
+              light="/placeholder.svg?height=720&width=1280"
+              onReady={() => setIsVideoReady(true)}
+                            style={{ opacity: isVideoReady ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
+            />
+          {!isVideoReady && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+              
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+export default function EnhancedPortfolio() {
+  const projects = [
+    {
+      title: 'NeuroSync AI',
+      description:
+        'Revolutionary AI platform that seamlessly integrates with IoT devices, optimizing smart home and industrial automation systems with unprecedented efficiency.',
+      icon: <Cpu size={48} className="text-purple-400" />,
+    },
+    {
+      title: 'Quantum Ledger',
+      description:
+        'Next-generation blockchain solution offering unparalleled security and scalability for financial institutions and government agencies.',
+      icon: <SiHiveBlockchain size={48} className="text-indigo-400" />,
+    },
+    {
+      title: 'EcoSphere Analytics',
+      description:
+        'Advanced environmental monitoring system utilizing satellite data and machine learning to predict and mitigate climate change impacts.',
+      icon: <Globe size={48} className="text-green-400" />,
+    },
+    {
+      title: 'MediChain Secure',
+      description:
+        'Blockchain-powered healthcare data management system ensuring patient privacy while facilitating seamless data sharing among authorized medical professionals.',
+      icon: <Database size={48} className="text-blue-400" />,
+    },
+  ]
+
+  return (
+    <div className="bg-black min-h-screen">
+      <Header />
+      <EnhancedHeroSection />
+      <FeaturedVideoSection />
+      <main>
+        <StartupProgressSection />
+        <section className="py-24 bg-gradient-to-b from-black to-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Pioneering Solutions</h2>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+                Discover our groundbreaking projects that are reshaping industries and setting new standards in technological innovation.
+              </p>
+            </motion.div>
+            <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 gap-x-8 lg:grid-cols-2 xl:gap-x-12">
+              {projects.map((project, index) => (
+                <EnhancedProjectCard key={index} {...project} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+        <EnhancedTechnologiesSection />
+        <StartupMilestonesSection />
+        <TestimonialsSection />
+      </main>
+      <Footer />
+    </div>
+  )
+}
