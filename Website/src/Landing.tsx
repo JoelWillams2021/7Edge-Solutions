@@ -499,9 +499,9 @@ const Footer: React.FC = React.memo(() => {
           >
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
-              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Mobile Apps</a></li>
-              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Web Applications</a></li>
-              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">API Development</a></li>
+              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Mobile Apps</a></li>
+              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Web Applications</a></li>
+              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">API Development</a></li>
             </ul>
           </motion.div>
           <motion.div
@@ -514,7 +514,6 @@ const Footer: React.FC = React.memo(() => {
             <ul className="space-y-3">
               <li><a href="/about-us" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
               <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="/careers" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
             </ul>
           </motion.div>
           <motion.div

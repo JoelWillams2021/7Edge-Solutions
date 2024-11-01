@@ -165,7 +165,7 @@ const EnhancedHeroSection: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Pioneering AI, Blockchain, and Cloud solutions that transform industries and drive innovation
+            Pioneering AI, Web, and Cloud solutions that transform industries and drives innovation
           </motion.p>
           <motion.button
             className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -205,9 +205,7 @@ const StatCard: React.FC<{ icon: React.ReactNode; value: string; label: string }
 const StartupProgressSection: React.FC = () => {
   const stats = [
     { icon: <Users />, value: "Alpha", label: "Development Stage" },
-    { icon: <Briefcase />, value: "3", label: "Pilot Projects" },
-    { icon: <Award />, value: "2", label: "Research Patents Pending" },
-    { icon: <Cpu />, value: "4", label: "Core Technologies" },
+    { icon: <Cpu />, value: "7", label: "Core Technologies" },
   ]
 
   return (
@@ -221,15 +219,18 @@ const StartupProgressSection: React.FC = () => {
         >
           Our Startup Journey
         </motion.h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} />
+            <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+              <StatCard {...stat} />
+            </div>
           ))}
         </div>
       </div>
     </section>
   )
 }
+
 
 const EnhancedProjectCard: React.FC<{ title: string; description: string; icon: React.ReactNode; index: number }> = ({
   title,
@@ -396,10 +397,10 @@ const EnhancedTechnologiesSection: React.FC = () => {
 
 const StartupMilestonesSection: React.FC = () => {
   const milestones = [
-    { title: "Concept Validation", description: "Successfully validated our core technology concept" },
-    { title: "Seed Funding", description: "Secured initial seed funding to accelerate development" },
-    { title: "Beta Launch", description: "Launched beta version to early adopters for feedback" },
-    { title: "First Enterprise Client", description: "Onboarded our first enterprise client for a pilot project" },
+    { title: "Enhance Customer Satisfaction", description: "Focus on delievering reliable, high-quality software solutions to our clients" },
+    { title: "Expand Market Reach", description: "Build the company's prescene in key target markets by utilizing key partnerships and networking strategies" },
+    { title: "Drive Innovation through R&D", description: "Dedicate resources through research and development to stay ahead of industry trends and create cutting-edge software solutions" },
+    { title: "Building a Strong Talent Pool", description: "Build a network of passionate, top of the line technical talent to drive company growth" },
   ]
 
   return (
@@ -411,7 +412,7 @@ const StartupMilestonesSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Our Startup Milestones
+          Our Business Goals
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {milestones.map((milestone, index) => (
@@ -467,25 +468,11 @@ const TestimonialsSection: React.FC = () => {
   const testimonials = [
     {
       quote:
-        "Seven Edge Solutions has shown incredible potential with their innovative approach to AI integration. Their team's expertise is evident in the early results of our collaboration.",
-      author: 'Dr. Emily Chen',
-      role: 'CTO, TechStart Innovations',
-      image: '/placeholder.svg?height=200&width=200',
-    },
-    {
-      quote:
-        "As an early adopter of Seven Edge's technology, I'm impressed by their commitment to pushing the boundaries of what's possible in blockchain solutions.",
-      author: 'Michael Rodriguez',
-      role: 'Founder, BlockChain Ventures',
-      image: '/placeholder.svg?height=200&width=200',
-    },
-    {
-      quote:
-        "Seven Edge's approach to cloud architecture is refreshing. Their solutions, though in early stages, show promise for scalability and efficiency.",
-      author: 'Sarah Johnson',
-      role: 'Cloud Architect, FutureTech Inc.',
-      image: '/placeholder.svg?height=200&width=200',
-    },
+        "I am delighted to express my sincere appreciation for the exceptional services provided by 7 Edge Solutions. As a fellow young business owner, I was amazed by their prowess in coding, conducting meetings, and crafting well-written paragraphs, among other essential tasks. Despite being a small business with team members still in school, their dedication and talent shone through brilliantly",
+      author: 'Ryan Paige',
+      role: 'Photogrpaher & Entrepreneur',
+      image: '../images/paige.jpg',
+    }
   ]
 
   useEffect(() => {
@@ -504,7 +491,7 @@ const TestimonialsSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          What Our Early Adopters Say
+          What Our Clients Say
         </motion.h2>
         <div className="relative h-[300px] md:h-[250px]">
           <AnimatePresence mode="wait">
@@ -552,23 +539,18 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  AI & Machine Learning
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  Mobile Apps
                 </a>
               </li>
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  Blockchain Development
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  Web Development
                 </a>
               </li>
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  IoT Solutions
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  Cloud Architecture
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  API Development
                 </a>
               </li>
             </ul>
@@ -583,16 +565,6 @@ const Footer: React.FC = () => {
               <li>
                 <a href="/about-us" className="text-gray-400 hover:text-white transition-colors">
                   About Us
-                </a>
-              </li>
-              <li>
-                <a href="/careers" className="text-gray-400 hover:text-white transition-colors">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="/press" className="text-gray-400 hover:text-white transition-colors">
-                  Press & Media
                 </a>
               </li>
               <li>
@@ -642,24 +614,6 @@ const Footer: React.FC = () => {
                 <FaGithub size={24} />
               </motion.a>
             </div>
-            <div className="mt-6">
-              <h5 className="text-sm font-semibold mb-2 text-purple-400">Stay Updated</h5>
-              <form className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-                <motion.button
-                  type="submit"
-                  className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-r-md"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Subscribe
-                </motion.button>
-              </form>
-            </div>
           </motion.div>
         </div>
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
@@ -670,66 +624,32 @@ const Footer: React.FC = () => {
   )
 }
 
-const FeaturedVideoSection: React.FC = () => {
-  const [isVideoReady, setIsVideoReady] = useState(false)
-  
-  return (
-    <section className="py-24 bg-gradient-to-b from-gray-900 to-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-16 text-center text-white"
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Our Vision in Action
-        </motion.h2>
-        <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-2xl">
-                      <ReactPlayer
-              url="/images/invideo-ai-1080 Discover Our Cutting-Edge Software Solut 2024-10-25.mp4"
-              width="100%"
-              height="100%"
-              controls
-              light="/placeholder.svg?height=720&width=1280"
-              onReady={() => setIsVideoReady(true)}
-                            style={{ opacity: isVideoReady ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}
-            />
-          {!isVideoReady && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-              
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 
 export default function EnhancedPortfolio() {
   const projects = [
     {
-      title: 'NeuroSync AI',
+      title: 'Plant Health AI',
       description:
-        'Revolutionary AI platform that seamlessly integrates with IoT devices, optimizing smart home and industrial automation systems with unprecedented efficiency.',
+        'A machine learning integrated website that takes images as input to help evaluate plant health.',
       icon: <Cpu size={48} className="text-purple-400" />,
     },
     {
-      title: 'Quantum Ledger',
+      title: 'eCommerce Website',
       description:
-        'Next-generation blockchain solution offering unparalleled security and scalability for financial institutions and government agencies.',
+        'A next-generation eCommerce website for a clothing store, offering unparalleled security, flexibility and convenience for the business owner.',
       icon: <SiHiveBlockchain size={48} className="text-indigo-400" />,
     },
     {
-      title: 'EcoSphere Analytics',
+      title: 'Celestify',
       description:
-        'Advanced environmental monitoring system utilizing satellite data and machine learning to predict and mitigate climate change impacts.',
+        'An advanced 3-D solar system representation, with helpful information blocks attached to each planet.',
       icon: <Globe size={48} className="text-green-400" />,
     },
     {
-      title: 'MediChain Secure',
+      title: 'AI Dectector',
       description:
-        'Blockchain-powered healthcare data management system ensuring patient privacy while facilitating seamless data sharing among authorized medical professionals.',
+        'A state of the art AI Detector that helps detect plagiarism in academic works.',
       icon: <Database size={48} className="text-blue-400" />,
     },
   ]
@@ -738,7 +658,6 @@ export default function EnhancedPortfolio() {
     <div className="bg-black min-h-screen">
       <Header />
       <EnhancedHeroSection />
-      <FeaturedVideoSection />
       <main>
         <StartupProgressSection />
         <section className="py-24 bg-gradient-to-b from-black to-gray-900">

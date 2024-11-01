@@ -170,23 +170,18 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  AI & Machine Learning
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  Mobile Apps
                 </a>
               </li>
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  Blockchain Development
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  Web Development
                 </a>
               </li>
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  IoT Solutions
-                </a>
-              </li>
-              <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
-                  Cloud Architecture
+                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
+                  API Development
                 </a>
               </li>
             </ul>
@@ -201,16 +196,6 @@ const Footer: React.FC = () => {
               <li>
                 <a href="/about-us" className="text-gray-400 hover:text-white transition-colors">
                   About Us
-                </a>
-              </li>
-              <li>
-                <a href="/careers" className="text-gray-400 hover:text-white transition-colors">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="/press" className="text-gray-400 hover:text-white transition-colors">
-                  Press & Media
                 </a>
               </li>
               <li>
@@ -259,24 +244,6 @@ const Footer: React.FC = () => {
               >
                 <FaGithub size={24} />
               </motion.a>
-            </div>
-            <div className="mt-6">
-              <h5 className="text-sm font-semibold mb-2 text-purple-400">Stay Updated</h5>
-              <form className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-                <motion.button
-                  type="submit"
-                  className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-2 rounded-r-md"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Subscribe
-                </motion.button>
-              </form>
             </div>
           </motion.div>
         </div>
