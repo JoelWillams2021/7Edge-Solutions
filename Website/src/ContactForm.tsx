@@ -170,18 +170,23 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  Mobile Apps
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  AI & Machine Learning
                 </a>
               </li>
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  Web Development
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Blockchain Development
                 </a>
               </li>
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  API Development
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  IoT Solutions
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Cloud Architecture
                 </a>
               </li>
             </ul>
@@ -221,7 +226,7 @@ const Footer: React.FC = () => {
                 <FaInstagram size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://x.com/7edge13562/status/1848938645383782416?s=46"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.8 }}
@@ -229,22 +234,15 @@ const Footer: React.FC = () => {
                 <FaTwitter size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/company/7edge-solutions/"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.8 }}
               >
                 <FaLinkedin size={24} />
               </motion.a>
-              <motion.a
-                href="#"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                whileTap={{ scale: 0.8 }}
-              >
-                <FaGithub size={24} />
-              </motion.a>
             </div>
+          
           </motion.div>
         </div>
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
