@@ -470,7 +470,7 @@ const TestimonialsSection: React.FC = () => {
         "I am delighted to express my sincere appreciation for the exceptional services provided by 7 Edge Solutions. As a fellow young business owner, I was amazed by their prowess in coding, conducting meetings, and crafting well-written paragraphs, among other essential tasks. Despite being a small business with team members still in school, their dedication and talent shone through brilliantly",
       author: 'Ryan Paige',
       role: 'Photographer & Entrepreneur',
-      image: '/images/paige.jpg',
+      image: '../images/paige.jpg',
     }
   ]
 
