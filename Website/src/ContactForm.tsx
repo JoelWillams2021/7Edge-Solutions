@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { Menu, X, ChevronDown, Plus, Minus, ArrowRight, Send } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { Menu, X, ChevronDown, Plus, Minus, Send } from 'lucide-react'
+import { FaInstagram, FaTwitter, FaLinkedin} from 'react-icons/fa'
 import emailjs from '@emailjs/browser'
 
 const EMAILJS_SERVICE_ID = 'service_38lxiz7'

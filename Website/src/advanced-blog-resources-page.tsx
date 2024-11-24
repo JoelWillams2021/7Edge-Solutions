@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, TrendingUp, MessageSquare, ThumbsUp, Calendar, User, Clock, ExternalLink, Search, Moon, Sun, ChevronDown, Github, Twitter, Linkedin } from 'lucide-react'
+import { ArrowRight, TrendingUp, MessageSquare, ThumbsUp, Calendar, User, Clock, Search, Moon, Sun, Github, Twitter, Linkedin } from 'lucide-react'
 import { format } from 'date-fns'
 import { debounce } from 'lodash'
 import { Line } from 'react-chartjs-2'
@@ -543,7 +543,7 @@ export default function EnhancedSoftwareSolutionsBlog() {
     post.content.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const handleVote = async (pollId: string, optionId: string) => {
+  const handleVote = async (_pollId: string, optionId: string) => {
     try {
       // Simulating API call to record vote
       await new Promise(resolve => setTimeout(resolve, 500))

@@ -8,7 +8,7 @@ import './App.css';
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Menu, X, Code, Database, Cloud, Zap, Globe, Cpu, Users, RefreshCw, Lightbulb, Wallet } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode }> = React.memo(({ href, children }) => {
   const [isHovered, setIsHovered] = useState(false)

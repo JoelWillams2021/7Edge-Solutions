@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
-import { Menu, X, ArrowRight, Code, Database, Cloud, Zap, Globe, Award, Cpu, Users, RefreshCw, Lightbulb, Wallet } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin, FaGithub, FaReact, FaAngular, FaVuejs, FaNodeJs, FaPython, FaJava, FaAws } from 'react-icons/fa'
+import { Menu, X, ArrowRight, Code, Database, Cloud, Zap, Globe, Cpu, Users } from 'lucide-react'
+import { FaInstagram, FaTwitter, FaLinkedin, FaReact, FaAngular, FaVuejs, FaNodeJs, FaPython, FaJava, FaAws } from 'react-icons/fa'
 import { SiMongodb, SiPostgresql, SiGooglecloud, SiTensorflow, SiKubernetes, SiHiveBlockchain } from 'react-icons/si'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Sphere, MeshDistortMaterial } from '@react-three/drei'
@@ -112,7 +112,7 @@ const Header: React.FC = () => {
 
 const AnimatedSphere = () => {
   const mesh = useRef<Mesh>(null)
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (mesh.current) {
       mesh.current.rotation.x += delta * 0.25
       mesh.current.rotation.y += delta * 0.25

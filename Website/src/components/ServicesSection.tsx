@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { FaMobileAlt, FaGlobe, FaCloud, FaCode, FaMicrochip, FaArrowsAltH, FaCogs, FaVrCardboard } from 'react-icons/fa';
-import ServiceCard from '/Users/mursaleensakoskar/Downloads/7Edge-Solutions-main-2/Website/src/components/ServiceCard.tsx';
+import { useEffect, useRef } from 'react';
+import { FaMobileAlt, FaGlobe, FaCloud, FaCode, FaMicrochip, FaVrCardboard } from 'react-icons/fa';
 
 const services = [
   { title: 'Web Applications', subtitle: 'Modern, responsive web apps using React, Angular, and Vue.js with robust backend systems.', icon: FaGlobe },
@@ -55,9 +54,9 @@ export default function ServicesSection() {
           </p>
         </div>
         <div ref={sectionRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {services.map((_service, index) => (
             <div key={index} className="opacity-0" style={{ animationDelay: `${index * 100}ms` }}>
-              <ServiceCard {...service} />
+              
             </div>
           ))}
         </div>

@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { Menu, X, Users, Target, Eye, Star, Code, Zap, Shield, Globe, Cloud, Database, Box } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { Menu, X, Users, Target, Eye, Globe } from 'lucide-react'
+import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
 import { Building, ArrowBigUp, Lightbulb, Expand, CheckCircle2, Gem, Rocket, Clock, HeartHandshake } from 'lucide-react'
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode }> = ({ href, children }) => (
@@ -479,7 +479,7 @@ const TeamSection: React.FC = () => {
           >
             <div className="rounded-lg overflow-hidden shadow-2xl">
               <img
-                src="/placeholder.svg?height=400&width=600"
+                src="../images/Team.JPG"
                 alt="Our Team"
                 className="w-full h-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
               />
