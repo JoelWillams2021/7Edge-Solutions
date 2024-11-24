@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
-import { Menu, X, ArrowRight, Code, Database, Cloud, Zap, Globe, Award, Cpu, Users, Briefcase } from 'lucide-react'
+import { Menu, X, ArrowRight, Code, Database, Cloud, Zap, Globe, Award, Cpu, Users, RefreshCw, Lightbulb, Wallet } from 'lucide-react'
 import { FaInstagram, FaTwitter, FaLinkedin, FaGithub, FaReact, FaAngular, FaVuejs, FaNodeJs, FaPython, FaJava, FaAws } from 'react-icons/fa'
 import { SiMongodb, SiPostgresql, SiGooglecloud, SiTensorflow, SiKubernetes, SiHiveBlockchain } from 'react-icons/si'
 import { Canvas, useFrame } from '@react-three/fiber'
@@ -152,7 +152,7 @@ const EnhancedHeroSection: React.FC = () => {
       <div className="relative z-20 flex flex-col md:flex-row items-center justify-between w-full max-w-7xl mx-auto px-4">
         <div className="text-left text-white max-w-2xl mb-8 md:mb-0">
           <motion.h1
-            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text"
+            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text leading-tight py-2"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -165,7 +165,7 @@ const EnhancedHeroSection: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Pioneering AI, Web, and Cloud solutions that transform industries and drives innovation
+            Pioneering AI, Web, and Cloud solutions that transform industries and drive innovation
           </motion.p>
           <motion.button
             className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
@@ -230,7 +230,6 @@ const StartupProgressSection: React.FC = () => {
     </section>
   )
 }
-
 
 const EnhancedProjectCard: React.FC<{ title: string; description: string; icon: React.ReactNode; index: number }> = ({
   title,
@@ -397,9 +396,9 @@ const EnhancedTechnologiesSection: React.FC = () => {
 
 const StartupMilestonesSection: React.FC = () => {
   const milestones = [
-    { title: "Enhance Customer Satisfaction", description: "Focus on delievering reliable, high-quality software solutions to our clients" },
-    { title: "Expand Market Reach", description: "Build the company's prescene in key target markets by utilizing key partnerships and networking strategies" },
-    { title: "Drive Innovation through R&D", description: "Dedicate resources through research and development to stay ahead of industry trends and create cutting-edge software solutions" },
+    { title: "Enhance Customer Satisfaction", description: "Focus on delivering reliable, high-quality software solutions to our clients" },
+    { title: "Expand Market Reach", description: "Build the company's presence in key target markets by utilizing key partnerships and networking strategies" },
+    { title: "Drive Innovation through R&D", description: "Dedicate resources to research and development to stay ahead of industry trends and create cutting-edge software solutions" },
     { title: "Building a Strong Talent Pool", description: "Build a network of passionate, top of the line technical talent to drive company growth" },
   ]
 
@@ -470,8 +469,8 @@ const TestimonialsSection: React.FC = () => {
       quote:
         "I am delighted to express my sincere appreciation for the exceptional services provided by 7 Edge Solutions. As a fellow young business owner, I was amazed by their prowess in coding, conducting meetings, and crafting well-written paragraphs, among other essential tasks. Despite being a small business with team members still in school, their dedication and talent shone through brilliantly",
       author: 'Ryan Paige',
-      role: 'Photogrpaher & Entrepreneur',
-      image: '../images/paige.jpg',
+      role: 'Photographer & Entrepreneur',
+      image: '/placeholder.svg?height=64&width=64',
     }
   ]
 
@@ -590,7 +589,7 @@ const Footer: React.FC = () => {
                 <FaInstagram size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://x.com/7edge13562/status/1848938645383782416?s=46"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.8 }}
@@ -598,20 +597,12 @@ const Footer: React.FC = () => {
                 <FaTwitter size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/company/7edge-solutions/"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.8 }}
               >
                 <FaLinkedin size={24} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                whileTap={{ scale: 0.8 }}
-              >
-                <FaGithub size={24} />
               </motion.a>
             </div>
           </motion.div>
@@ -623,8 +614,6 @@ const Footer: React.FC = () => {
     </footer>
   )
 }
-
-
 
 export default function EnhancedPortfolio() {
   const projects = [
@@ -647,7 +636,7 @@ export default function EnhancedPortfolio() {
       icon: <Globe size={48} className="text-green-400" />,
     },
     {
-      title: 'AI Dectector',
+      title: 'AI Detector',
       description:
         'A state of the art AI Detector that helps detect plagiarism in academic works.',
       icon: <Database size={48} className="text-blue-400" />,
