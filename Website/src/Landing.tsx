@@ -2,6 +2,7 @@
 import './tailwind.css';
 import './App.css';
 
+
 'use client'
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
@@ -54,7 +55,6 @@ const Header: React.FC = React.memo(() => {
 
   const navLinks = useMemo(() => [
     { href: "/portfolio", label: "Portfolio" },
-    { href: "/blog", label: "Blog & Resources" },
     { href: "/about-us", label: "About Us" },
     { href: "/contact", label: "Contact" },
   ], [])
@@ -289,7 +289,7 @@ const EnhancedHeroSection: React.FC = () => {
         style={{ y }}
       >
         <motion.h1
-          className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text drop-shadow-2xl"
+          className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text drop-shadow-2xl leading-tight py-2"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -297,7 +297,7 @@ const EnhancedHeroSection: React.FC = () => {
           {typedText}
         </motion.h1>
         <motion.p
-          className="text-xl md:text-2xl mb-12 text-white/90 text-shadow-lg"
+          className="text-xl md:text-2xl mb-12 text-white/90 text-shadow-lg max-w-3xl"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -318,7 +318,6 @@ const EnhancedHeroSection: React.FC = () => {
           Talk to a specialist
         </motion.button>
       </motion.div>
-    
     </section>
   );
 };
@@ -471,9 +470,8 @@ const Footer: React.FC = React.memo(() => {
 
   const socialLinks = useMemo(() => [
     { href: "https://www.instagram.com/7edge.official/", icon: <FaInstagram size={24} /> },
-    { href: "https://x.com/7edge13562?s=21", icon: <FaTwitter size={24} /> },
-    { href: "#", icon: <FaLinkedin size={24} /> },
-    { href: "#", icon: <FaGithub size={24} /> },
+    { href: "https://x.com/7edge13562/status/1848938645383782416?s=46", icon: <FaTwitter size={24} /> },
+    { href: "https://www.linkedin.com/company/7edge-solutions/", icon: <FaLinkedin size={24} /> }
   ], [])
 
   return (
@@ -499,9 +497,9 @@ const Footer: React.FC = React.memo(() => {
           >
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
-              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Mobile Apps</a></li>
-              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">Web Applications</a></li>
-              <li><a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">API Development</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Mobile Apps</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Web Applications</a></li>
+              <li><a href="/" className="text-gray-400 hover:text-white transition-colors">API Development</a></li>
             </ul>
           </motion.div>
           <motion.div
