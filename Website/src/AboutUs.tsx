@@ -129,18 +129,23 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-6 text-purple-400">Services</h4>
             <ul className="space-y-3">
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  Mobile Apps
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  AI & Machine Learning
                 </a>
               </li>
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  Web Applications
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Blockchain Development
                 </a>
               </li>
               <li>
-                <a href="/portfolio" className="text-gray-400 hover:text-white transition-colors">
-                  API Development
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  IoT Solutions
+                </a>
+              </li>
+              <li>
+                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                  Cloud Architecture
                 </a>
               </li>
             </ul>
@@ -180,7 +185,7 @@ const Footer: React.FC = () => {
                 <FaInstagram size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://x.com/7edge13562/status/1848938645383782416?s=46"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.8 }}
@@ -188,20 +193,12 @@ const Footer: React.FC = () => {
                 <FaTwitter size={24} />
               </motion.a>
               <motion.a
-                href="#"
+                href="https://www.linkedin.com/company/7edge-solutions/"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.8 }}
               >
                 <FaLinkedin size={24} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="text-gray-400 hover:text-purple-400 transition-colors"
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                whileTap={{ scale: 0.8 }}
-              >
-                <FaGithub size={24} />
               </motion.a>
             </div>
           </motion.div>
@@ -227,10 +224,8 @@ const LiveDesign = () => {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    // Enable alpha blending optimization
     ctx.globalCompositeOperation = 'lighter';
 
-    // Handle canvas resize with throttling
     let resizeTimeout: NodeJS.Timeout;
     const resizeCanvas = () => {
       clearTimeout(resizeTimeout);
@@ -242,7 +237,6 @@ const LiveDesign = () => {
         canvas.style.width = window.innerWidth + 'px';
         canvas.style.height = window.innerHeight + 'px';
         
-        // Redistribute particles on resize
         initParticles();
       }, 250);
     };
@@ -258,7 +252,6 @@ const LiveDesign = () => {
       }));
     };
 
-    // Pre-calculate constants
     const maxDistance = 100;
     const maxDistanceSquared = maxDistance * maxDistance;
     
@@ -273,15 +266,12 @@ const LiveDesign = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const particles = particlesRef.current;
 
-      // Batch particle updates
       for (let i = 0; i < particles.length; i++) {
         const particle = particles[i];
         
-        // Update position with delta time
         particle.x += particle.vx * (deltaTime / 16);
         particle.y += particle.vy * (deltaTime / 16);
 
-        // Efficient boundary checking
         if (particle.x < 0) {
           particle.x = 0;
           particle.vx = Math.abs(particle.vx);
@@ -299,7 +289,6 @@ const LiveDesign = () => {
         }
       }
 
-      // Batch render particles and connections
       ctx.beginPath();
       for (let i = 0; i < particles.length; i++) {
         const particle = particles[i];
@@ -309,7 +298,6 @@ const LiveDesign = () => {
       ctx.fillStyle = 'rgba(147, 51, 234, 0.75)';
       ctx.fill();
 
-      // Optimize line drawing
       ctx.beginPath();
       for (let i = 0; i < particles.length; i++) {
         const particleA = particles[i];
@@ -332,13 +320,11 @@ const LiveDesign = () => {
       requestRef.current = requestAnimationFrame(animate);
     };
 
-    // Initial setup
     resizeCanvas();
     initParticles();
     window.addEventListener('resize', resizeCanvas);
     requestRef.current = requestAnimationFrame(animate);
 
-    // Cleanup
     return () => {
       if (requestRef.current) {
         cancelAnimationFrame(requestRef.current);
@@ -361,9 +347,8 @@ const Hero: React.FC = () => {
     <div className="relative bg-black text-white min-h-screen flex items-center justify-center overflow-hidden">
       <LiveDesign />
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl">
-        
         <motion.h1
-          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 text-transparent bg-clip-text leading-tight py-2"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -483,7 +468,7 @@ const TeamSection: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              While we may be a startup, our collective experience spans years across various tech domains. We're committed to fostering a culture of continuous learning, collaboration, and innovation, ensuring that we're always at the cutting edge of technology trends and best practices.
+              While we may be a startup, our collective experience spans decades across various tech domains. We're committed to fostering a culture of continuous learning, collaboration, and innovation, ensuring that we're always at the cutting edge of technology trends and best practices.
             </motion.p>
           </div>
           <motion.div
@@ -494,7 +479,7 @@ const TeamSection: React.FC = () => {
           >
             <div className="rounded-lg overflow-hidden shadow-2xl">
               <img
-                src="public/images/Team.JPG"
+                src="/placeholder.svg?height=400&width=600"
                 alt="Our Team"
                 className="w-full h-auto rounded-lg transform hover:scale-105 transition-transform duration-300"
               />
@@ -654,7 +639,6 @@ const FutureRoadmap: React.FC = () => {
   )
 }
 
-
 const StartupAdvantages: React.FC = () => {
   const advantages = [
     { 
@@ -759,7 +743,6 @@ const StartupAdvantages: React.FC = () => {
     </motion.section>
   )
 }
-
 
 const AboutUs: React.FC = () => {
   return (
