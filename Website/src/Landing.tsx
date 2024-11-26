@@ -8,41 +8,28 @@ import './App.css';
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Menu, X, Code, Database, Cloud, Zap, Globe, Cpu, Users, RefreshCw, Lightbulb, Wallet } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
+import { FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom';
 
-const NavLink: React.FC<{ href: string; children: React.ReactNode }> = React.memo(({ href, children }) => {
-  const [isHovered, setIsHovered] = useState(false)
+const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
+  <motion.a
+    href={href}
+    className="text-white hover:text-purple-300 px-3 py-2 rounded-md text-sm font-medium transition-colors relative overflow-hidden group"
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onClick}
+  >
+    <span className="relative z-10">{children}</span>
+    <motion.span
+      className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-400"
+      initial={{ scaleX: 0 }}
+      whileHover={{ scaleX: 1 }}
+      transition={{ duration: 0.3 }}
+    />
+  </motion.a>
+)
 
-  const handleHoverStart = useCallback(() => setIsHovered(true), [])
-  const handleHoverEnd = useCallback(() => setIsHovered(false), [])
-
-  return (
-    <motion.a
-      href={href}
-      className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors relative overflow-hidden group"
-      onHoverStart={handleHoverStart}
-      onHoverEnd={handleHoverEnd}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <span className="relative z-10">{children}</span>
-      <motion.span
-        className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-400"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
-      <motion.span
-        className="absolute inset-0 bg-purple-500 opacity-0"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 0.1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
-    </motion.a>
-  )
-})
-
-const Header: React.FC = React.memo(() => {
+const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { scrollY } = useScroll()
   const headerBackground = useTransform(
@@ -51,13 +38,7 @@ const Header: React.FC = React.memo(() => {
     ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.8)']
   )
 
-  const toggleMenu = useCallback(() => setIsMenuOpen(prev => !prev), [])
-
-  const navLinks = useMemo(() => [
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/about-us", label: "About Us" },
-    { href: "/contact", label: "Contact" },
-  ], [])
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
     <motion.header
@@ -84,16 +65,10 @@ const Header: React.FC = React.memo(() => {
             </span>
           </motion.a>
           <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <NavLink key={link.href} href={link.href}>{link.label}</NavLink>
-            ))}
-            <motion.button
-              className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Started
-            </motion.button>
+            <NavLink href="/portfolio">Portfolio</NavLink>
+            <NavLink href="/about-us">About Us</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            
           </nav>
           <div className="md:hidden">
             <motion.button
@@ -106,32 +81,50 @@ const Header: React.FC = React.memo(() => {
             </motion.button>
           </div>
         </div>
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className="md:hidden py-4 space-y-2"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {navLinks.map((link) => (
-                <NavLink key={link.href} href={link.href}>{link.label}</NavLink>
-              ))}
-              <motion.button
-                className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl w-full mt-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Started
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={toggleMenu}
+          >
+            <motion.div
+              className="absolute right-0 top-0 h-full w-64 bg-gradient-to-br from-black via-purple-800 to-black shadow-lg overflow-hidden"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex justify-end p-4">
+                  <motion.button
+                    onClick={toggleMenu}
+                    className="p-2 text-white hover:text-purple-300 rounded-md transition-colors duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <X size={24} />
+                  </motion.button>
+                </div>
+                <nav className="flex flex-col space-y-4 p-4">
+                  <NavLink href="/portfolio" onClick={toggleMenu}>Portfolio</NavLink>
+                  <NavLink href="/about-us" onClick={toggleMenu}>About Us</NavLink>
+                  <NavLink href="/contact" onClick={toggleMenu}>Contact</NavLink>
+                </nav>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   )
-})
+}
+
+
 
 const Particle: React.FC<{ index: number }> = React.memo(({ index }) => {
   const particleProps = useMemo(() => ({
@@ -263,6 +256,7 @@ const EnhancedHeroSection: React.FC = () => {
   const fullText = "Building the Future of Business Technology";
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -500]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let timeouts: NodeJS.Timeout[] = [];
@@ -280,6 +274,10 @@ const EnhancedHeroSection: React.FC = () => {
 
     return () => timeouts.forEach(clearTimeout);
   }, []);
+
+  const handleContactClick = () => {
+    navigate('/contact');
+  };
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -314,6 +312,7 @@ const EnhancedHeroSection: React.FC = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          onClick={handleContactClick}
         >
           Talk to a specialist
         </motion.button>
