@@ -1,4 +1,3 @@
-
 import './tailwind.css';
 import './App.css';
 
@@ -8,7 +7,7 @@ import './App.css';
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { Menu, X, Code, Database, Cloud, Zap, Globe, Cpu, Users, RefreshCw, Lightbulb, Wallet } from 'lucide-react'
-import { FaInstagram, FaTwitter, FaLinkedin} from 'react-icons/fa'
+import { FaInstagram, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick?: () => void }> = ({ href, children, onClick }) => (
@@ -67,6 +66,7 @@ const Header: React.FC = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <NavLink href="/portfolio">Portfolio</NavLink>
             <NavLink href="/about-us">About Us</NavLink>
+            <NavLink href="/services" onClick={toggleMenu}>Services</NavLink>
             <NavLink href="/contact">Contact</NavLink>
             
           </nav>
@@ -113,6 +113,7 @@ const Header: React.FC = () => {
                 <nav className="flex flex-col space-y-4 p-4">
                   <NavLink href="/portfolio" onClick={toggleMenu}>Portfolio</NavLink>
                   <NavLink href="/about-us" onClick={toggleMenu}>About Us</NavLink>
+                  <NavLink href="/services" onClick={toggleMenu}>Services</NavLink>
                   <NavLink href="/contact" onClick={toggleMenu}>Contact</NavLink>
                 </nav>
               </div>
@@ -169,7 +170,7 @@ const Particle: React.FC<{ index: number }> = React.memo(({ index }) => {
 
 const FloatingGradientOrbs: React.FC = React.memo(() => {
   const orbs = useMemo(() => 
-    [...Array(3)].map((_, i) => ({
+    [...Array(0)].map((_, i) => ({
       key: i,
       width: `${Math.random() * 30 + 20}%`,
       height: `${Math.random() * 30 + 20}%`,
@@ -329,14 +330,14 @@ const ServiceCard: React.FC<{ title: string; subtitle: string; icon: React.React
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-lg shadow-xl transition-all duration-300 relative overflow-hidden"
+      className="bg-gradient-to-br from-gray-900 to-blue-900 p-6 rounded-lg shadow-xl transition-all duration-300 relative overflow-hidden"
       whileHover={{ scale: 1.05, y: -10 }}
       whileTap={{ scale: 0.95 }}
       onHoverStart={handleHoverStart}
       onHoverEnd={handleHoverEnd}
     >
       <motion.div
-        className="text-4xl text-purple-400 mb-4 relative z-10"
+        className="text-4xl text-yellow-400 mb-4 relative z-10"
         animate={{
           y: isHovered ? [-5, 0, -5] : 0,
         }}
@@ -347,7 +348,7 @@ const ServiceCard: React.FC<{ title: string; subtitle: string; icon: React.React
       <h3 className="text-xl font-bold mb-2 text-white relative z-10">{title}</h3>
       <p className="text-gray-300 relative z-10">{subtitle}</p>
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-600 to-indigo-700 opacity-0"
+        className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-blue-600 opacity-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 0.2 : 0 }}
         transition={{ duration: 0.3 }}
