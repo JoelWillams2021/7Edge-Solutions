@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useRef, useState, useEffect, useMemo } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Points, PointMaterial, Line } from '@react-three/drei'
 import * as THREE from 'three'
-import { Menu, X, Code, Zap, Shield, Cloud, Database, Cpu } from 'lucide-react'
+import { Menu, X, Zap, Shield, Cloud, Cpu } from 'lucide-react'
 import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa'
 import { Bar, BarChart, Pie, PieChart, Cell, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, Line as RechartsLine, LineChart } from 'recharts'
 
@@ -262,7 +262,7 @@ function FloatingParticles({ count = 100 }) {
 }
 
 function ConnectingLines() {
-  const { camera } = useThree()
+  useThree()
   const points: THREE.Vector3[] = useMemo(() => {
       const temp: THREE.Vector3[] = []
       for (let i = 0; i < 100; i++) {
@@ -401,7 +401,7 @@ const ServiceSection: React.FC<{
                     fill="#8884d8"
                     dataKey="value"
                   >
-                    {chartData.data.map((entry: any, index: number) => (
+                    {chartData.data.map((_entry: any, index: number) => (
                       <Cell key={`cell-${index}`} fill={chartData.colors[index % chartData.colors.length]} />
                     ))}
                   </Pie>
