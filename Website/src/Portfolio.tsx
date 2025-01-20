@@ -64,13 +64,7 @@ const Header: React.FC = () => {
             <NavLink href="/portfolio">Portfolio</NavLink>
             <NavLink href="/about-us">About Us</NavLink>
             <NavLink href="/contact">Contact</NavLink>
-            <motion.button
-              className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-medium hover:from-purple-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Started
-            </motion.button>
+            <NavLink href="/services">Services</NavLink>
           </nav>
           <div className="md:hidden">
             <motion.button

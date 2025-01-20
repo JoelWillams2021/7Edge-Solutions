@@ -4,6 +4,7 @@ import Portfolio from './Portfolio'; // Import the Portfolio component
 import Contact from './ContactForm';
 import AboutUs from './AboutUs';
 import AdvancedBlogResourcesPage from "./advanced-blog-resources-page";
+import Services from "./Services";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/contact" element={<Contact/>} />
          {/* About Us Page Route */}
          <Route path="/about-us" element={<AboutUs/>} />
+         {/* Services Page Route*/}
+          <Route path="/services" element={<Services/>} /> 
       </Routes>
     </Router>
   );
